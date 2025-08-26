@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ <meta charset="UTF-8">
+ <title>API Playground</title>
+ <style>
+   body { font-family: monospace; padding: 20px; }
+   textarea, input { width: 100%; margin: 10px 0; }
+   pre { background: #282c34; color: #9efeff; padding: 15px; border-radius: 5px; }
+   label { font-weight: bold; display: block; }
+   button { margin: 5px 0; padding: 10px; }
+ </style>
+</head>
+<body>
+ <h2>API Playground</h2>
+ 
+ <label>Path (for GET/POST)</label>
+ <input id="apiPath" placeholder="e.g. about"/>
+ <button onclick="sendRequest('GET')">Send GET</button>
+
+ <label>Payload (for POST):</label>
+ <textarea id="payload" rows="6">{ "name": "Gaurav" }</textarea>
+ <button onclick="sendRequest('POST')">Send POST</button>
+
+ <h3>Response:</h3>
+ <pre id="response"></pre>
+
+ <script>
+   async function sendRequest(method) {
+     const path = document.getElementById("apiPath").value;
+     const payload = document.getElementById("payload").value;
+
+     const options = { method };
+     if (method === 'POST') {
+       options.headers = { 'Content-Type': 'application/json' };
+       options.body = payload;
+     }
+
+     try {
+       const res = await fetch(path, options);
+       const text = await res.text();
+       document.getElementById("response").textContent =
+         JSON.stringify(JSON.parse(text), null, 2);
+     } catch (err) {
+       document.getElementById("response").textContent = "Error: " + err.message;
+     }
+   }
+ </script>
+</body>
+</html>
