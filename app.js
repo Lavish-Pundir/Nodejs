@@ -15,15 +15,15 @@ app.get("/", (req, res) => {
    res.sendFile(path.join(__dirname, "views", "index.html"));
 });
 
-app.get("/params/:id/:course", (req, res) => {
+app.get("/params/:id", (req, res) => {
    res.json({ message: "data received", data: { method: "GET", data: { ...req.params } } });
 });
 
-app.get("/about", (req, res) => {
+app.get("/query", (req, res) => {
    res.json({ message: "data received", data: { method: "GET", name: req.query.name } });
 });
 
-app.post("/create", (req, res) => {
+app.post("/post", (req, res) => {
    res.json({ message: "data received", data: { ...req.body, method: "POST" } });
 });
 
