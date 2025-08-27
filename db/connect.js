@@ -1,20 +1,18 @@
-const mongoose = require("mongoose");
+const { MongoClient } = require("mongodb");
 
 const uri = "mongodb+srv://lavishpundir90:fqolSAW50vsMS2vX@ThapaServer.zmdqvlv.mongodb.net/ThapaServer?retryWrites=true&w=majority";
-
-// const uri = "mongodb+srv://gpundir060:gpundir060@swapdeal.hbs0jxp.mongodb.net/?retryWrites=true&w=majority&appName=swapdeal";
-
-// const uri = "mongodb+srv://lavishpundir90:fqolSAW50vsMS2vX@ThapaServer.zmdqvlv.mongodb.net/?retryWrites=true&w=majority&appName=ThapaServer"
+const client = new MongoClient(uri); // No need for extra options
 
 const connectDB = async () => {
   try {
-    await mongoose.connect(uri);
-    console.log("✅ MongoDB connected successfully...");
+    await client.connect();
+    const db = client.db("ThapaServer");
+    console.log("✅ MongoDB connected successfully!");
+    return db;
   } catch (error) {
-    console.error(" ❌ MongoDB connection failed:", error.message);
+    console.error("❌ MongoDB connection failed:", error.message);
+    // process.exit(1);
   }
 };
 
 module.exports = connectDB;
-
-// const uri = "mongodb+srv://lavishpundir90:fqolSAW50vsMS2vX@ThapaServer.zmdqvlv.mongodb.net/ThapaServer?retryWrites=true&w=majority";
