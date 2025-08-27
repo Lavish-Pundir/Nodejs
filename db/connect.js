@@ -1,7 +1,8 @@
 const { MongoClient } = require("mongodb");
+require("dotenv").config(); // Load environment variables
 
-const uri = "mongodb+srv://lavishpundir90:fqolSAW50vsMS2vX@ThapaServer.zmdqvlv.mongodb.net/ThapaServer?retryWrites=true&w=majority";
-const client = new MongoClient(uri); // No need for extra options
+const uri = process.env.MONGO_URI;
+const client = new MongoClient(uri);
 
 const connectDB = async () => {
   try {
@@ -11,7 +12,7 @@ const connectDB = async () => {
     return db;
   } catch (error) {
     console.error("❌ MongoDB connection failed:", error.message);
-    // process.exit(1);
+    process.exit(1);
   }
 };
 
